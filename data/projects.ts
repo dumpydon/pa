@@ -7,7 +7,7 @@ export type BuildInsight = {
 
 export type Project = {
   number: string;
-  slug: "tracelens" | "pathforge" | "leetvis";
+  slug: "tracelens" | "pathforge" | "limitx" | "leetvis";
   title: string;
   category: string;
   description: string;
@@ -19,6 +19,7 @@ export type Project = {
     src: string;
     alt: string;
     position?: string;
+    videoSrc?: string;
   };
   behindTheBuild: BuildInsight[];
 };
@@ -112,6 +113,50 @@ export const projects: Project[] = [
   },
   {
     number: "03",
+    slug: "limitx",
+    title: "LimitX",
+    category: "Exchange matching & microstructure",
+    description:
+      "Deterministic exchange matching engine and market microstructure lab with price-time priority, fixed-point prices, journal replay, and live order-book depth. Fully simulated, with no real-money trading or order routing.",
+    technologies: ["Python", "FastAPI", "Next.js", "TypeScript", "WebSockets"],
+    repositoryUrl: "https://github.com/dumpydon/limitx",
+    liveUrl: "https://limitx.dumpydon.workers.dev/",
+    accent: "#de6868",
+    media: {
+      src: "/projects/limitx/market-lab-poster.webp",
+      videoSrc: "/projects/limitx/market-lab-loop.mp4",
+      alt: "LimitX simulated market with updating order-book depth, market depth, and recent trades",
+      position: "center",
+    },
+    behindTheBuild: [
+      {
+        number: "01",
+        icon: "tool",
+        title: "Hardest technical problem",
+        body: "Preserving price-time priority through partial fills, cancellations, and modifications while ensuring replay reconstructs the same events and final book state.",
+      },
+      {
+        number: "02",
+        icon: "branch",
+        title: "Important engineering decision",
+        body: "One writer owns each symbol’s book. The pure matcher uses integer tick prices and FIFO queues, while the browser consumes sequence-checked market-data projections.",
+      },
+      {
+        number: "03",
+        icon: "warning",
+        title: "What went wrong",
+        body: "An evidence payload scanned available liquidity for every order. Profiling exposed the extra work; restricting that preflight to FOK orders preserved matching semantics.",
+      },
+      {
+        number: "04",
+        icon: "arrow",
+        title: "What you would improve next",
+        body: "Bound retained event history after the million-operation memory stress test, and explore a Rust or C++ hot path while keeping Python for simulation and verification.",
+      },
+    ],
+  },
+  {
+    number: "04",
     slug: "leetvis",
     title: "LeetVis",
     category: "Practice intelligence",

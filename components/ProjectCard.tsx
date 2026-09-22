@@ -2,6 +2,7 @@ import type { CSSProperties, MouseEventHandler } from "react";
 import Image from "next/image";
 import type { Project } from "@/data/projects";
 import { ArrowUpRight } from "./Icons";
+import { ProjectVideo } from "./ProjectVideo";
 
 type Props = {
   project: Project;
@@ -25,7 +26,7 @@ export function ProjectCard({ project, index, onOpen }: Props) {
         <span className="project-layout">
           <span className="project-visual">
             {/* The media is owned by Piyush's project repositories or captured from their live demos. */}
-            <Image
+            {project.media.videoSrc ? <ProjectVideo media={project.media} decorative /> : <Image
               className="image-cover"
               src={project.media.src}
               alt=""
@@ -36,7 +37,7 @@ export function ProjectCard({ project, index, onOpen }: Props) {
               style={project.slug === "tracelens"
                 ? { objectPosition: project.media.position, width: "100%", height: "100%", inset: 0, transformOrigin: "left center" }
                 : { objectPosition: project.media.position, width: "102.5%", height: "102.5%", maxWidth: "none", inset: "-1.25%" }}
-            />
+            />}
             <span className="project-visual-shade" />
             <span className="project-image-index" aria-hidden="true">{project.number}</span>
           </span>
