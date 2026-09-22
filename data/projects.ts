@@ -7,7 +7,7 @@ export type BuildInsight = {
 
 export type Project = {
   number: string;
-  slug: "tracelens" | "pathforge" | "limitx" | "leetvis";
+  slug: "tracelens" | "pathforge" | "limitx" | "daypilot" | "leetvis";
   title: string;
   category: string;
   description: string;
@@ -157,6 +157,50 @@ export const projects: Project[] = [
   },
   {
     number: "04",
+    slug: "daypilot",
+    title: "DayPilot",
+    category: "Human-approved operations",
+    description:
+      "Personal operations agent that grounds plans in connected context, pauses for human approval, supports revision, and verifies approved MCP actions through a resumable LangGraph workflow.",
+    technologies: ["Python", "FastAPI", "LangGraph", "MCP", "Next.js"],
+    repositoryUrl: "https://github.com/dumpydon/daypilot",
+    liveUrl: "https://daypilot.dumpydon.workers.dev/",
+    accent: "#1E90FF",
+    media: {
+      src: "/projects/daypilot/workflow-poster.webp",
+      videoSrc: "/projects/daypilot/workflow-loop.mp4",
+      alt: "DayPilot completing a grounded mail request with its result, executed actions, and MCP activity timeline",
+      position: "center",
+    },
+    behindTheBuild: [
+      {
+        number: "01",
+        icon: "tool",
+        title: "Hardest technical problem",
+        body: "Keeping plans grounded across connected services while binding approval to the exact action payloads and preserving that boundary through revisions and workflow resumes.",
+      },
+      {
+        number: "02",
+        icon: "branch",
+        title: "Important engineering decision",
+        body: "LangGraph sees stable semantic MCP tools rather than provider APIs. A code-enforced gateway checks persisted approval before any external write can execute.",
+      },
+      {
+        number: "03",
+        icon: "warning",
+        title: "What went wrong",
+        body: "Provider timeouts can leave a write’s outcome unknown. The execution ledger records attempts before invocation so a resumed workflow does not blindly repeat a mutation.",
+      },
+      {
+        number: "04",
+        icon: "arrow",
+        title: "What you would improve next",
+        body: "Expand provider read-back coverage and recovery tooling so more actions can be matched to stable resources instead of being reported as created but unverified.",
+      },
+    ],
+  },
+  {
+    number: "05",
     slug: "leetvis",
     title: "LeetVis",
     category: "Practice intelligence",
