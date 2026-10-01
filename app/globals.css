@@ -207,11 +207,17 @@ img, svg { display: block; }
 .project-step { padding-bottom: clamp(5rem, 17vh, 10rem); position: sticky; top: 10.2rem; }
 .project-card {
   --card-accent: #7768ff;
-  border: 1px solid var(--line);
+  border: 1px solid color-mix(in srgb, var(--card-accent) 55%, var(--line));
   background: linear-gradient(135deg, var(--glass), transparent 40%), var(--surface-solid);
   width: 100%;
   min-height: min(40rem, calc(100svh - 12rem));
-  box-shadow: 0 28px 75px var(--shadow), 0 2px 0 var(--glass) inset;
+  box-shadow:
+    0 0 18px 1px color-mix(in srgb, var(--card-accent) 48%, transparent),
+    0 0 54px 5px color-mix(in srgb, var(--card-accent) 24%, transparent),
+    0 0 112px 10px color-mix(in srgb, var(--card-accent) 11%, transparent),
+    0 0 80px 12px var(--background),
+    0 28px 75px var(--shadow),
+    0 2px 0 var(--glass) inset;
   color: inherit;
   font: inherit;
   text-align: left;
@@ -225,7 +231,16 @@ img, svg { display: block; }
   overflow: hidden;
 }
 .project-card::after { pointer-events: none; border-radius: inherit; box-shadow: 0 0 100px color-mix(in srgb, var(--card-accent), transparent 92%) inset; content: ""; transition: box-shadow .35s; position: absolute; inset: 0; }
-.project-card:hover, .project-card:focus-visible { border-color: var(--card-accent); box-shadow: 0 34px 90px var(--shadow), 0 0 55px color-mix(in srgb, var(--card-accent), transparent 65%); }
+.project-card:hover, .project-card:focus-visible {
+  border-color: var(--card-accent);
+  box-shadow:
+    0 0 22px 2px color-mix(in srgb, var(--card-accent) 62%, transparent),
+    0 0 66px 7px color-mix(in srgb, var(--card-accent) 32%, transparent),
+    0 0 128px 14px color-mix(in srgb, var(--card-accent) 15%, transparent),
+    0 0 80px 12px var(--background),
+    0 34px 90px var(--shadow),
+    0 2px 0 var(--glass) inset;
+}
 .project-card:focus-visible { outline: 3px solid var(--card-accent); outline-offset: 3px; }
 .project-layout { min-height: inherit; grid-template-columns: minmax(0, 1.5fr) minmax(21rem, .9fr); display: grid; }
 .project-visual {
