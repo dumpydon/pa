@@ -1,11 +1,13 @@
 import { profile } from "@/data/profile";
-import { ArrowDown, File, Github, Leetcode, Linkedin } from "./Icons";
+import { ArrowDown, Clist, Codeforces, File, Github, Leetcode, Linkedin } from "./Icons";
 
 const links = [
   { label: "Resume", href: profile.resumeUrl, icon: File },
   { label: "LinkedIn", href: profile.linkedinUrl, icon: Linkedin },
   { label: "GitHub", href: profile.githubUrl, icon: Github },
   { label: "LeetCode", href: profile.leetcodeUrl, icon: Leetcode },
+  { label: "Codeforces", href: profile.codeforcesUrl, icon: Codeforces },
+  { label: "CLIST", href: profile.clistUrl, icon: Clist },
 ];
 
 export function Hero() {
@@ -20,9 +22,9 @@ export function Hero() {
               className="social-button"
               href={href}
               key={label}
-              target={href === "#" ? undefined : "_blank"}
-              rel={href === "#" ? undefined : "noreferrer"}
-              aria-label={href === "#" ? `${label} link — add URL in data/profile.ts` : label}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${label} (opens in a new tab)`}
             >
               <Icon />
               <span>{label}</span>
