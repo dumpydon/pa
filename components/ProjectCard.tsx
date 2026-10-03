@@ -14,7 +14,7 @@ export function ProjectCard({ project, index, onOpen }: Props) {
   const style = { "--card-accent": project.accent, zIndex: index + 1 } as CSSProperties;
 
   return (
-    <div className="project-step" style={{ zIndex: index + 1 }}>
+    <div className="project-step" style={style}>
       <button
         className="project-card"
         type="button"

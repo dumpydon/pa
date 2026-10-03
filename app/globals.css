@@ -204,20 +204,55 @@ img, svg { display: block; }
 .projects-heading h2 { letter-spacing: -.065em; margin: .2rem 0 0; font-size: clamp(2.3rem, 5vw, 4.75rem); font-weight: 400; line-height: .95; }
 .projects-instruction { color: var(--text-faint); letter-spacing: .06em; padding-bottom: .35rem; font-family: "Geist Mono", monospace; font-size: .62rem; }
 
-.project-step { padding-bottom: clamp(5rem, 17vh, 10rem); position: sticky; top: 10.2rem; }
+.project-glow-filters { position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none; }
+.project-step {
+  --project-step-gap: clamp(5rem, 17vh, 10rem);
+  --glow-corner-radius: 1.6rem;
+  --glow-ambient-blur: 58.08px;
+  --glow-ambient-inset: 7.92px;
+  --glow-dither-filter: url("#project-glow-light");
+  --glow-ambient-opacity: .2;
+  --glow-edge-opacity: .32;
+  padding-bottom: var(--project-step-gap);
+  position: sticky;
+  top: 10.2rem;
+  isolation: isolate;
+}
+[data-theme="dark"] .project-step {
+  --glow-ambient-blur: 44.88px;
+  --glow-dither-filter: url("#project-glow-dark");
+  --glow-ambient-opacity: .34;
+  --glow-edge-opacity: .66;
+}
+/* Glow lives behind the clipped card, not inside its overflow boundary. */
+.project-step::before, .project-step::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: var(--glow-corner-radius);
+  background: var(--card-accent);
+  transition: opacity .35s;
+}
+.project-step::before {
+  inset: calc(-1 * var(--glow-ambient-inset)) calc(-1 * var(--glow-ambient-inset)) calc(var(--project-step-gap) - var(--glow-ambient-inset));
+  filter: blur(var(--glow-ambient-blur)) var(--glow-dither-filter);
+  opacity: var(--glow-ambient-opacity);
+}
+.project-step::after {
+  inset: -2px -2px calc(var(--project-step-gap) - 2px);
+  filter: blur(14px);
+  opacity: var(--glow-edge-opacity);
+}
+.project-step:has(> .project-card:is(:hover, :focus-visible))::before { opacity: calc(var(--glow-ambient-opacity) * 1.12); }
+.project-step:has(> .project-card:is(:hover, :focus-visible))::after { opacity: calc(var(--glow-edge-opacity) * 1.12); }
 .project-card {
   --card-accent: #7768ff;
   border: 1px solid color-mix(in srgb, var(--card-accent) 55%, var(--line));
   background: linear-gradient(135deg, var(--glass), transparent 40%), var(--surface-solid);
   width: 100%;
   min-height: min(40rem, calc(100svh - 12rem));
-  box-shadow:
-    0 0 18px 1px color-mix(in srgb, var(--card-accent) 48%, transparent),
-    0 0 54px 5px color-mix(in srgb, var(--card-accent) 24%, transparent),
-    0 0 112px 10px color-mix(in srgb, var(--card-accent) 11%, transparent),
-    0 0 80px 12px var(--background),
-    0 28px 75px var(--shadow),
-    0 2px 0 var(--glass) inset;
+  box-shadow: 0 2px 0 var(--glass) inset;
   color: inherit;
   font: inherit;
   text-align: left;
@@ -225,7 +260,7 @@ img, svg { display: block; }
   border-radius: 1.6rem;
   outline: none;
   padding: 0;
-  transition: border-color .35s, box-shadow .35s;
+  transition: border-color .35s;
   display: block;
   position: relative;
   overflow: hidden;
@@ -233,13 +268,6 @@ img, svg { display: block; }
 .project-card::after { pointer-events: none; border-radius: inherit; box-shadow: 0 0 100px color-mix(in srgb, var(--card-accent), transparent 92%) inset; content: ""; transition: box-shadow .35s; position: absolute; inset: 0; }
 .project-card:hover, .project-card:focus-visible {
   border-color: var(--card-accent);
-  box-shadow:
-    0 0 22px 2px color-mix(in srgb, var(--card-accent) 62%, transparent),
-    0 0 66px 7px color-mix(in srgb, var(--card-accent) 32%, transparent),
-    0 0 128px 14px color-mix(in srgb, var(--card-accent) 15%, transparent),
-    0 0 80px 12px var(--background),
-    0 34px 90px var(--shadow),
-    0 2px 0 var(--glass) inset;
 }
 .project-card:focus-visible { outline: 3px solid var(--card-accent); outline-offset: 3px; }
 .project-layout { min-height: inherit; grid-template-columns: minmax(0, 1.5fr) minmax(21rem, .9fr); display: grid; }
@@ -325,7 +353,7 @@ img, svg { display: block; }
 @keyframes build-panel-in { from { opacity: 0; transform: translateY(4px); } }
 
 @media (max-width: 900px) {
-  .project-step { padding-bottom: 14vh; top: 9.5rem; }
+  .project-step { --project-step-gap: 14vh; top: 9.5rem; }
   .project-card { min-height: auto; }
   .project-layout { grid-template-columns: 1fr; }
   .project-visual { border-bottom: 1px solid #ffffff14; border-right: 0; min-height: 27rem; }
@@ -347,7 +375,7 @@ img, svg { display: block; }
   .scroll-cue, .projects-instruction { display: none; }
   .projects-section { width: min(100% - 1.25rem,88rem); padding-top: 0; padding-bottom: 8rem; }
   .projects-heading { min-height: 6.5rem; margin-bottom: 1rem; padding: 1.4rem .25rem 1rem; }
-  .project-step { padding-bottom: 10vh; top: 7.2rem; }
+  .project-step { --project-step-gap: 10vh; --glow-corner-radius: 1.2rem; top: 7.2rem; }
   .project-card { border-radius: 1.2rem; }
   .project-visual { min-height: 20rem; }
   .project-copy { min-height: 25rem; padding: 1.6rem; }
@@ -430,6 +458,7 @@ img, svg { display: block; }
 .footer-status { display: inline-flex; align-items: center; gap: .65rem; }
 .footer-status-dot { width: .375rem; height: .375rem; flex: none; border-radius: 50%; background: var(--footer-accent); }
 .footer-location { text-align: center; }
+.footer-clock { display: inline-block; width: 8ch; white-space: nowrap; text-align: right; font-variant-numeric: tabular-nums; }
 .footer-signoff { display: flex; align-items: center; justify-content: flex-end; gap: 1.5rem; }
 .footer-copyright { white-space: nowrap; }
 .footer-back-top { display: inline-flex; flex: none; align-items: center; gap: .4rem; min-height: 2rem; color: var(--text-soft); font-size: .75rem; line-height: 1.4; transition: color .15s ease; }
