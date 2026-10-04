@@ -6,6 +6,7 @@ import type { Project } from "@/data/projects";
 
 export function ProjectVideo({ media, decorative = false }: { media: Project["media"]; decorative?: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const mediaClassName = media.fit === "contain" ? "image-cover image-contain" : "image-cover";
 
   useEffect(() => {
     const video = videoRef.current;
@@ -58,20 +59,20 @@ export function ProjectVideo({ media, decorative = false }: { media: Project["me
   return (
     <>
       <Image
-        className="image-cover"
+        className={mediaClassName}
         src={media.src}
         alt={decorative ? "" : media.alt}
-        width={1600}
-        height={1178}
+        width={media.width ?? 1600}
+        height={media.height ?? 1178}
         sizes="(max-width: 900px) 100vw, 65vw"
         loading={decorative ? "lazy" : "eager"}
         style={{ objectPosition: media.position }}
       />
       <video
         ref={videoRef}
-        className="image-cover project-video"
-        width={1600}
-        height={1178}
+        className={`${mediaClassName} project-video`}
+        width={media.width ?? 1600}
+        height={media.height ?? 1178}
         poster={media.src}
         preload="none"
         autoPlay

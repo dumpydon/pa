@@ -27,14 +27,16 @@ export function ProjectCard({ project, index, onOpen }: Props) {
           <span className="project-visual">
             {/* The media is owned by Piyush's project repositories or captured from their live demos. */}
             {project.media.videoSrc ? <ProjectVideo media={project.media} decorative /> : <Image
-              className="image-cover"
+              className={project.media.fit === "contain" ? "image-cover image-contain" : "image-cover"}
               src={project.media.src}
               alt=""
-              width={1600}
-              height={1000}
+              width={project.media.width ?? 1600}
+              height={project.media.height ?? 1000}
               sizes="(max-width: 900px) 100vw, 62vw"
               loading={index === 0 ? "eager" : "lazy"}
-              style={project.slug === "tracelens"
+              style={project.media.fit === "contain"
+                ? { objectPosition: project.media.position }
+                : project.slug === "tracelens"
                 ? { objectPosition: project.media.position, width: "100%", height: "100%", inset: 0, transformOrigin: "left center" }
                 : { objectPosition: project.media.position, width: "102.5%", height: "102.5%", maxWidth: "none", inset: "-1.25%" }}
             />}

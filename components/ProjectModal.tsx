@@ -62,7 +62,7 @@ export function ProjectModal({ project, onClose }: { project: Project; onClose: 
       onCancel={(event) => { event.preventDefault(); requestClose(); }}
       onClick={(event) => { if (event.target === event.currentTarget) requestClose(); }}
     >
-      <article className="project-modal" style={style}>
+      <article className="project-modal" style={style} data-project={project.slug}>
         <h2 className="sr-only" id={`${project.slug}-modal-title`}>{project.title}</h2>
         <button className="modal-close" type="button" onClick={requestClose} aria-label={`Close ${project.title} details`}><Close /></button>
         <div className="project-modal-tabs">

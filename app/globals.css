@@ -280,6 +280,9 @@ img, svg { display: block; }
   overflow: hidden;
 }
 .image-cover { width: 102.5%; height: 102.5%; max-width: none; object-fit: cover; position: absolute; inset: -1.25%; transition: transform .75s cubic-bezier(.2,.8,.2,1), filter .75s; }
+.image-cover.image-contain { width: 100%; height: 100%; inset: 0; object-fit: contain; padding: 1rem; background: var(--surface-visual); }
+.modal-preview .image-contain { padding-top: 4.75rem; }
+.image-contain ~ .project-visual-shade, .image-contain ~ .modal-image-shade { background: none; }
 .project-card:hover .project-visual img, .project-card:focus-visible .project-visual img { filter: saturate(1.05); transform: scale(1.025); }
 .project-video { display: block; pointer-events: none; opacity: 0; }
 .project-video[data-playing="true"] { opacity: 1; }
@@ -321,6 +324,8 @@ img, svg { display: block; }
 .modal-copy { flex-direction: column; justify-content: center; gap: 2.25rem; padding: clamp(2.25rem, 4vw, 4.5rem); display: flex; overflow-y: auto; }
 .modal-copy h2 { letter-spacing: -.075em; text-wrap: balance; margin: .9rem 0 0; font-size: clamp(3rem,5vw,5.5rem); font-weight: 650; line-height: .92; }
 .modal-kicker { color: var(--card-accent); }
+:root:not([data-theme="dark"]) .project-card[data-project="jevon"]:is(:hover, :focus-visible) .project-title,
+:root:not([data-theme="dark"]) .project-modal[data-project="jevon"] .modal-kicker { color: color-mix(in srgb, var(--card-accent) 65%, var(--foreground)); }
 .modal-description { color: var(--text-soft); margin: 1.7rem 0 0; font-size: 1rem; line-height: 1.72; }
 .modal-actions { flex-wrap: wrap; gap: .65rem; display: flex; }
 .modal-actions a { border: 1px solid var(--line); background: var(--glass); min-height: 2.85rem; color: var(--foreground); border-radius: 999px; outline: none; justify-content: center; align-items: center; gap: .55rem; padding: .75rem 1rem; font-size: .78rem; font-weight: 520; transition: border-color .18s, background .18s, transform .18s; display: inline-flex; }
@@ -362,6 +367,7 @@ img, svg { display: block; }
   .project-modal, .project-modal-tabs { min-height: 0; max-height: none; }
   .project-overview-view { min-height: 0; max-height: none; display: block; }
   .modal-preview { border-bottom: 1px solid #ffffff17; border-right: 0; min-height: min(56vw,29rem); }
+  .modal-preview:has(> .image-contain) { min-height: min(100vw, 40rem); }
   .modal-copy { overflow: visible; }
   .behind-build-panel { min-height: 0; max-height: none; padding: 6.5rem 2rem 2rem; }
   .behind-build-header { grid-template-columns: 1fr; gap: 1.25rem; }

@@ -7,19 +7,22 @@ export type BuildInsight = {
 
 export type Project = {
   number: string;
-  slug: "tracelens" | "pathforge" | "limitx" | "daypilot" | "leetvis";
+  slug: "tracelens" | "pathforge" | "jevon" | "limitx" | "daypilot" | "leetvis";
   title: string;
   category: string;
   description: string;
   technologies: string[];
   repositoryUrl: string;
-  liveUrl: string;
+  liveUrl: string | null;
   accent: string;
   media: {
     src: string;
     alt: string;
     position?: string;
     videoSrc?: string;
+    fit?: "contain";
+    width?: number;
+    height?: number;
   };
   behindTheBuild: BuildInsight[];
 };
@@ -113,6 +116,53 @@ export const projects: Project[] = [
   },
   {
     number: "03",
+    slug: "jevon",
+    title: "Jevon",
+    category: "TypeSafe · Jev Decision Engine",
+    description:
+      "Customer-feedback decision engine built on TypeSafe's Jev API, turning unstructured reviews into typed decisions with calibrated confidence, then applying deterministic gates and rules to surface actionable signals.",
+    technologies: ["Python", "FastAPI", "React", "TypeScript", "TypeSafe · Jev API"],
+    repositoryUrl: "https://github.com/dumpydon/jevon",
+    liveUrl: null, // JEVON_LIVE_URL_PLACEHOLDER: replace null with the real production URL.
+    // TypeSafe's live desktop-panel/label token: rgb(243, 134, 161), typesafe.ai.
+    accent: "#F386A1",
+    media: {
+      src: "/projects/jevon/jevon-overview.webp",
+      alt: "Jevon Decision Lab analyzing a mixed customer review, with customer-risk signals, mention-gated aspect ratings, and an inspectable decision pipeline",
+      position: "center",
+      fit: "contain",
+      width: 1440,
+      height: 1222,
+    },
+    behindTheBuild: [
+      {
+        number: "01",
+        icon: "tool",
+        title: "Hardest technical problem",
+        body: "Separating absent aspects from negative feedback: mention probabilities gate satisfaction scores while the underlying answers remain available in the Decision Inspector.",
+      },
+      {
+        number: "02",
+        icon: "branch",
+        title: "Important engineering decision",
+        body: "TypeSafe's Jev System One Model evaluates 19 typed questions over shared semantic state; conventional code gates, composes, and inspects its probabilistic decisions.",
+      },
+      {
+        number: "03",
+        icon: "warning",
+        title: "What went wrong",
+        body: "Python and JavaScript round half-steps differently. Explicit half-up label mapping and captured response contracts protect the backend migration from subtle output changes.",
+      },
+      {
+        number: "04",
+        icon: "arrow",
+        title: "What you would improve next",
+        body: "Expand Jevon's labeled evaluation corpus and validate thresholds. TypeSafe reports 193.6× faster and 444.6× cheaper in its published System One workflow evaluations; these are provider results, not Jevon measurements or universal gains.",
+      },
+    ],
+  },
+  {
+    number: "04",
     slug: "limitx",
     title: "LimitX",
     category: "Exchange matching & microstructure",
@@ -156,7 +206,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    number: "04",
+    number: "05",
     slug: "daypilot",
     title: "DayPilot",
     category: "Human-approved operations",
@@ -200,7 +250,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    number: "05",
+    number: "06",
     slug: "leetvis",
     title: "LeetVis",
     category: "Practice intelligence",
