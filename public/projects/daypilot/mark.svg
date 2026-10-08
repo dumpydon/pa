@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-17 -27 288 288">
+  <!-- Existing approved DayPilot D/P monogram from daypilotMarkGeometry.ts. -->
+  <g fill="#3b82f6">
+    <path d="M0 0H138C202 0 254 52 254 117S202 234 138 234H88L110 176H141C175 176 202 150 202 117S175 60 141 60H61V114L0 158Z" />
+    <path d="M0 183L108 100C119 90 133 92 142 102C154 116 148 136 131 141L109 149L26 234H0Z" />
+  </g>
+</svg>

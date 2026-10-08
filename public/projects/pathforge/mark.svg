@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56">
+  <!-- Static export of PathForgeLogo.tsx and its original app/globals.css styles. -->
+  <rect width="56" height="56" rx="7.84" fill="#151b23" />
+  <g transform="translate(1.12 1.12) scale(.96)">
+    <g fill="none" stroke="#68717d" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 43V22L28 12L44 22" stroke="#fff" />
+      <path d="M12 43L29 34L44 22" opacity=".8" />
+    </g>
+    <g fill="#151b23" stroke="#8b949e" stroke-width="1.2">
+      <circle cx="12" cy="43" r="3.25" />
+      <circle cx="12" cy="22" r="3.25" stroke="#fff" />
+      <circle cx="28" cy="12" r="3.25" stroke="#fff" />
+      <circle cx="29" cy="34" r="3.25" />
+      <circle cx="44" cy="22" r="3.25" />
+    </g>
+    <g fill="#f7931e">
+      <path d="M12 43L21 34H29L37 25L44 22L48 15" pathLength="1" fill="none" stroke="#f7931e" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="12" cy="43" r="3.5" />
+      <circle cx="29" cy="34" r="3.5" />
+      <circle cx="44" cy="22" r="3.5" />
+      <path d="M51.5 10.5L42.5 13.6L47 16.8Z" />
+    </g>
+  </g>
+  <rect x=".56" y=".56" width="54.88" height="54.88" rx="7.28" fill="none" stroke="#3a4451" stroke-width="1.12" />
+</svg>

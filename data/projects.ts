@@ -33,6 +33,7 @@ export const projects: Project[] = [
     number: "01",
     slug: "tracelens",
     title: "TraceLens",
+    iconSrc: "/projects/tracelens/mark.svg",
     category: "Agentic incident investigation",
     description:
       "Evidence-driven incident investigation that correlates runtime telemetry with operational knowledge through a bounded LangGraph workflow, hypothesis verification, and citation-grounded root-cause reports.",
@@ -76,6 +77,7 @@ export const projects: Project[] = [
     number: "02",
     slug: "pathforge",
     title: "PathForge",
+    iconSrc: "/projects/pathforge/mark.svg",
     category: "Graph search laboratory",
     description:
       "Interactive graph-search laboratory for comparing BFS, DFS, Dijkstra, and A* across weighted grids with deterministic playback, editable terrain, algorithm metrics, and large-grid benchmark execution.",
@@ -119,6 +121,7 @@ export const projects: Project[] = [
     number: "03",
     slug: "jevon",
     title: "Jevon",
+    iconSrc: "/projects/jevon/mark.svg",
     category: "TypeSafe · Jev Decision Engine",
     description:
       "Customer-feedback decision engine built on TypeSafe's Jev API, turning unstructured reviews into typed decisions with calibrated confidence, then applying deterministic gates and rules to surface actionable signals.",
@@ -210,6 +213,7 @@ export const projects: Project[] = [
     number: "05",
     slug: "daypilot",
     title: "DayPilot",
+    iconSrc: "/projects/daypilot/mark.svg",
     category: "Human-approved operations",
     description:
       "Personal operations agent that grounds plans in connected context, pauses for human approval, supports revision, and verifies approved MCP actions through a resumable LangGraph workflow.",
