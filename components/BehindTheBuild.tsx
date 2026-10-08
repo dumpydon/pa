@@ -1,4 +1,5 @@
 import type { Project } from "@/data/projects";
+import Image from "next/image";
 import { ArrowUpRight, Branch, Tool, Warning } from "./Icons";
 
 const icons = { tool: Tool, branch: Branch, warning: Warning, arrow: ArrowUpRight };
@@ -9,7 +10,10 @@ export function BehindTheBuild({ project }: { project: Project }) {
       <header className="behind-build-header">
         <div>
           <p className="modal-kicker eyebrow">Behind the Build / {project.category}</p>
-          <h2>{project.title}</h2>
+          <h2 className={project.iconSrc ? "project-title-with-icon" : undefined}>
+            {project.iconSrc ? <Image className="project-title-icon" src={project.iconSrc} alt="" aria-hidden="true" width={64} height={64} /> : null}
+            {project.title}
+          </h2>
         </div>
         <p>The decisions, constraints, and next steps that shaped the work.</p>
       </header>

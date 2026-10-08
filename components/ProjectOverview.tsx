@@ -26,7 +26,10 @@ export function ProjectOverview({ project }: { project: Project }) {
       <div className="modal-copy">
         <div>
           <p className="project-meta modal-kicker">{project.category}</p>
-          <h2>{project.title}</h2>
+          <h2 className={project.iconSrc ? "project-title-with-icon" : undefined}>
+            {project.iconSrc ? <Image className="project-title-icon" src={project.iconSrc} alt="" aria-hidden="true" width={64} height={64} /> : null}
+            {project.title}
+          </h2>
           <p className="modal-description">{project.description}</p>
         </div>
         <div className="modal-tags" aria-label="Technologies used">

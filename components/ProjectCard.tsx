@@ -49,7 +49,10 @@ export function ProjectCard({ project, index, onOpen }: Props) {
                 <span>{project.number}</span>
                 <span>{project.category}</span>
               </span>
-              <span className="project-title">{project.title}</span>
+              <span className={project.iconSrc ? "project-title project-title-with-icon" : "project-title"}>
+                {project.iconSrc ? <Image className="project-title-icon" src={project.iconSrc} alt="" aria-hidden="true" width={64} height={64} /> : null}
+                {project.title}
+              </span>
               <span className="project-description">{project.description}</span>
             </span>
             <span className="project-footer">

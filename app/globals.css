@@ -299,6 +299,8 @@ img, svg { display: block; }
 .project-meta { color: var(--text-faint); font-family: "Geist Mono", monospace; letter-spacing: .1em; text-transform: uppercase; align-items: center; gap: .8rem; margin: 0; font-size: .63rem; display: flex; }
 .project-meta > span:first-child { border: 1px solid var(--line); border-radius: 999px; place-items: center; width: 1.75rem; height: 1.75rem; display: grid; }
 .project-title { letter-spacing: -.07em; text-wrap: balance; margin-top: 2.5rem; font-size: clamp(2.7rem, 4.6vw, 5rem); font-weight: 620; line-height: .94; transition: color .28s; display: block; }
+.project-title-with-icon { display: flex; align-items: center; gap: .2em; }
+.project-title-icon { width: .72em; height: .72em; flex: none; }
 .project-card:hover .project-title, .project-card:focus-visible .project-title { color: var(--card-accent); }
 .project-description { max-width: 32rem; color: var(--text-soft); margin-top: 1.6rem; font-size: clamp(.9rem, 1.25vw, 1.03rem); line-height: 1.65; display: block; }
 .project-footer { justify-content: space-between; align-items: end; gap: 1.5rem; margin-top: 3rem; display: flex; }
@@ -326,6 +328,8 @@ img, svg { display: block; }
 .modal-kicker { color: var(--card-accent); }
 :root:not([data-theme="dark"]) .project-card[data-project="jevon"]:is(:hover, :focus-visible) .project-title,
 :root:not([data-theme="dark"]) .project-modal[data-project="jevon"] .modal-kicker { color: color-mix(in srgb, var(--card-accent) 65%, var(--foreground)); }
+:root:not([data-theme="dark"]) .project-card[data-project="vigil"]:is(:hover, :focus-visible) .project-title,
+:root:not([data-theme="dark"]) .project-modal[data-project="vigil"] .modal-kicker { color: color-mix(in srgb, var(--card-accent) 65%, var(--foreground)); }
 .modal-description { color: var(--text-soft); margin: 1.7rem 0 0; font-size: 1rem; line-height: 1.72; }
 .modal-actions { flex-wrap: wrap; gap: .65rem; display: flex; }
 .modal-actions a { border: 1px solid var(--line); background: var(--glass); min-height: 2.85rem; color: var(--foreground); border-radius: 999px; outline: none; justify-content: center; align-items: center; gap: .55rem; padding: .75rem 1rem; font-size: .78rem; font-weight: 520; transition: border-color .18s, background .18s, transform .18s; display: inline-flex; }
