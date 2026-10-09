@@ -1,6 +1,7 @@
 import { profile } from "@/data/profile";
 import { ArrowDown, ArrowUpRight } from "./Icons";
 import { FooterClock } from "./FooterClock";
+import { VisitorCount } from "./VisitorCount";
 
 const footerLinks = [
   { label: "Projects", href: "#projects" },
@@ -54,6 +55,7 @@ export function Footer() {
           <p className="footer-location">New Delhi, India · <FooterClock /> IST · UTC+5:30</p>
           <div className="footer-signoff">
             <p className="footer-copyright">© 2026 {profile.name}</p>
+            <VisitorCount />
             <a className="footer-back-top" href="#top">
               <span>Back to top</span>
               <ArrowDown />

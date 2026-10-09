@@ -481,6 +481,8 @@ img, svg { display: block; }
 .footer-clock { display: inline-block; width: 8ch; white-space: nowrap; text-align: right; font-variant-numeric: tabular-nums; }
 .footer-signoff { display: flex; align-items: center; justify-content: flex-end; gap: 1.5rem; }
 .footer-copyright { white-space: nowrap; }
+.footer-visitor-count { flex: none; min-width: 6ch; color: #0969da; font-family: "Geist Mono", monospace; font-size: .6875rem; line-height: 1.6; font-variant-numeric: tabular-nums; text-align: center; }
+[data-theme="dark"] .footer-visitor-count { color: #1e90ff; }
 .footer-back-top { display: inline-flex; flex: none; align-items: center; gap: .4rem; min-height: 2rem; color: var(--text-soft); font-size: .75rem; line-height: 1.4; transition: color .15s ease; }
 .footer-back-top svg { width: .85rem; height: .85rem; transform: rotate(180deg); }
 .footer-back-top:hover { color: var(--foreground); }

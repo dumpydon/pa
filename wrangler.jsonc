@@ -4,10 +4,20 @@
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-08-23",
   "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "VISITOR_SITE_HOST": "piyush-agarwal-portfolio.dumpydon.workers.dev"
+  },
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
+  "d1_databases": [
+    {
+      "binding": "VISITORS_DB",
+      "database_name": "pa-visitors",
+      "migrations_dir": "migrations/visitors"
+    }
+  ],
   "observability": {
     "enabled": true
   }
