@@ -36,7 +36,7 @@ export function ProjectOverview({ project }: { project: Project }) {
           {project.technologies.map((technology) => <span className="tech-badge" key={technology}><span className="tech-dot" />{technology}</span>)}
         </div>
         <div className="modal-actions">
-          {project.liveUrl ? <a href={project.liveUrl} target="_blank" rel="noreferrer"><External />View live</a> : null}
+          {project.liveUrl ? <a href={project.liveUrl} target="_blank" rel="noopener noreferrer"><External />{project.liveLabel ?? "View live"}</a> : null}
           <a href={project.repositoryUrl} target="_blank" rel="noreferrer"><Code />View code</a>
         </div>
       </div>

@@ -10,11 +10,14 @@ export type Project = {
   slug: "tracelens" | "pathforge" | "jevon" | "limitx" | "daypilot" | "leetvis" | "vigil";
   title: string;
   iconSrc?: string;
+  platform?: "macOS";
   category: string;
   description: string;
   technologies: string[];
   repositoryUrl: string;
   liveUrl: string | null;
+  liveLabel?: string;
+  cardLink?: { label: string; href: string };
   accent: string;
   media: {
     src: string;
@@ -302,45 +305,49 @@ export const projects: Project[] = [
     slug: "vigil",
     title: "Vigil",
     iconSrc: "/projects/vigil/mark.svg",
-    category: "Offline-first application tracker",
+    platform: "macOS",
+    category: "Native macOS application tracker",
     description:
-      "Job-application tracker with UTC goals, editable history, and a compact PWA. Retains offline changes in IndexedDB and syncs to Cloudflare D1 through idempotent operations and conflict checks.",
-    technologies: ["React", "TypeScript", "Workers", "D1", "IndexedDB"],
+      "A macOS menu-bar app with a floating window for quick application logging, UTC goals, and quiet progress alerts. History stays on your Mac, with JSON/CSV backups and no account required.",
+    technologies: ["Swift", "AppKit", "WebKit", "React", "TypeScript", "IndexedDB"],
     repositoryUrl: "https://github.com/dumpydon/vigil",
     liveUrl: "https://vigil.dumpydon.workers.dev/",
+    liveLabel: "Download website",
+    cardLink: { label: "Quick Download Website", href: "https://vigil.dumpydon.workers.dev/" },
     accent: "#A970FF", // A lighter Twitch-like purple, refined for Vigil's portfolio accent.
     media: {
-      src: "/projects/vigil/dashboard.webp",
-      alt: "Vigil's dashboard showing UTC daily-goal progress, separate Easy Apply and external logging controls, and a seven-day application chart using local verification data",
+      src: "/projects/vigil/app-poster.webp",
+      videoSrc: "/projects/vigil/app-demo.mp4",
+      alt: "Vigil's published macOS product demo showing the menu-bar dashboard, floating window, quick application counts, and progress alerts with demonstration data",
       position: "center",
       fit: "contain",
-      width: 960,
-      height: 824,
+      width: 1920,
+      height: 1080,
     },
     behindTheBuild: [
       {
         number: "01",
         icon: "tool",
         title: "Hardest technical problem",
-        body: "Retaining offline edits through reloads, expired sessions, and multiple tabs while ensuring a retry after a lost server response cannot count the same applications twice.",
+        body: "Keeping the menu-bar dashboard and floating window consistent while retaining entries, drafts, and pending work when a panel closes or the app restarts.",
       },
       {
         number: "02",
         icon: "branch",
         title: "Important engineering decision",
-        body: "Individual entry records drive UTC totals. IndexedDB retains operations first; D1 commits each operation receipt and data change together, making acknowledged retries idempotent.",
+        body: "Bundle the React interface in a Swift/AppKit host. Both windows share a WebKit data store, while IndexedDB transactions and operation receipts keep local changes durable and idempotent.",
       },
       {
         number: "03",
         icon: "warning",
-        title: "What went wrong",
-        body: "A historical day's totals can change in another tab during review. Atomic before/after adjustments check the expected entry versions and require a fresh review when they conflict.",
+        title: "Important privacy boundary",
+        body: "The public Mac app must not inherit the connected owner's credentials or cloud workspace. A separate bundle identity, local records, and blocked native API calls isolate the public build.",
       },
       {
         number: "04",
         icon: "arrow",
         title: "What you would improve next",
-        body: "Improve recovery guidance and backup reminders: synchronization resumes while the app is open, but clearing browser storage can still erase work that has not reached D1.",
+        body: "Notarize public releases, improve update delivery, and complete broader Intel and macOS 13 runtime verification while preserving the existing local-data and backup formats.",
       },
     ],
   },
