@@ -2,12 +2,13 @@ import type { Project } from "@/data/projects";
 import Image from "next/image";
 import { Code, External } from "./Icons";
 import { ProjectVideo } from "./ProjectVideo";
+import { ProjectFilm } from "./ProjectFilm";
 
 export function ProjectOverview({ project }: { project: Project }) {
   return (
     <div className="project-overview-view" data-project={project.slug} role="tabpanel" id={`${project.slug}-overview-panel`} aria-labelledby={`${project.slug}-overview-tab`}>
-      <div className="modal-preview">
-        {project.media.videoSrc ? <ProjectVideo media={project.media} /> : <Image
+      <div className={project.media.film ? "modal-preview project-visual-with-film" : "modal-preview"}>
+        {project.media.film ? <ProjectFilm project={project} /> : project.media.videoSrc ? <ProjectVideo media={project.media} /> : <Image
           className={project.media.fit === "contain" ? "image-cover image-contain" : "image-cover"}
           src={project.media.src}
           alt={project.media.alt}
@@ -21,7 +22,7 @@ export function ProjectOverview({ project }: { project: Project }) {
             ? { objectPosition: project.media.position, width: "100%", height: "100%", inset: 0, transformOrigin: "left center" }
             : { objectPosition: project.media.position, width: "102.5%", height: "102.5%", maxWidth: "none", inset: "-1.25%" }}
         />}
-        <span className="modal-image-shade" />
+        {project.media.film ? null : <span className="modal-image-shade" />}
       </div>
       <div className="modal-copy">
         <div>

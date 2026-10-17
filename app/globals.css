@@ -204,48 +204,52 @@ img, svg { display: block; }
 .projects-heading h2 { letter-spacing: -.065em; margin: .2rem 0 0; font-size: clamp(2.3rem, 5vw, 4.75rem); font-weight: 400; line-height: .95; }
 .projects-instruction { color: var(--text-faint); letter-spacing: .06em; padding-bottom: .35rem; font-family: "Geist Mono", monospace; font-size: .62rem; }
 
-.project-glow-filters { position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none; }
 .project-step {
   --project-step-gap: clamp(5rem, 17vh, 10rem);
   --glow-corner-radius: 1.6rem;
-  --glow-ambient-blur: 58.08px;
-  --glow-ambient-inset: 7.92px;
-  --glow-dither-filter: url("#project-glow-light");
+  --glow-image: var(--glow-image-light);
   --glow-ambient-opacity: .2;
   --glow-edge-opacity: .32;
   padding-bottom: var(--project-step-gap);
   position: sticky;
   top: 10.2rem;
   isolation: isolate;
+  /* Keep the entire sticky card in one stable compositing group while scrolling. */
+  transform: translateZ(0);
+  will-change: transform;
 }
 [data-theme="dark"] .project-step {
-  --glow-ambient-blur: 44.88px;
-  --glow-dither-filter: url("#project-glow-dark");
+  --glow-image: var(--glow-image-dark);
   --glow-ambient-opacity: .34;
   --glow-edge-opacity: .66;
 }
-/* Glow lives behind the clipped card, not inside its overflow boundary. */
+/* Both glow layers have empty centers; neither filters the scrolling DOM. */
 .project-step::before, .project-step::after {
   content: "";
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
   border-radius: var(--glow-corner-radius);
-  background: var(--card-accent);
+  inset: 0 0 var(--project-step-gap);
+  background: transparent;
   transition: opacity .35s;
 }
 .project-step::before {
-  inset: calc(-1 * var(--glow-ambient-inset)) calc(-1 * var(--glow-ambient-inset)) calc(var(--project-step-gap) - var(--glow-ambient-inset));
-  filter: blur(var(--glow-ambient-blur)) var(--glow-dither-filter);
+  inset: -192px -192px calc(var(--project-step-gap) - 192px);
+  border: 320px solid transparent;
+  border-image-source: var(--glow-image);
+  border-image-slice: 320;
+  border-image-width: 320px;
+  border-image-repeat: stretch;
   opacity: var(--glow-ambient-opacity);
 }
 .project-step::after {
-  inset: -2px -2px calc(var(--project-step-gap) - 2px);
-  filter: blur(14px);
+  box-shadow: 0 0 28px 2px var(--card-accent);
   opacity: var(--glow-edge-opacity);
 }
-.project-step:has(> .project-card:is(:hover, :focus-visible))::before { opacity: calc(var(--glow-ambient-opacity) * 1.12); }
-.project-step:has(> .project-card:is(:hover, :focus-visible))::after { opacity: calc(var(--glow-edge-opacity) * 1.12); }
+/* One scroll-selected card owns the highlight; overlap cannot toggle it via :hover. */
+.project-step[data-highlighted="true"]::before { opacity: calc(var(--glow-ambient-opacity) * 1.12); }
+.project-step[data-highlighted="true"]::after { opacity: calc(var(--glow-edge-opacity) * 1.12); }
 .project-card {
   --card-accent: #7768ff;
   border: 1px solid color-mix(in srgb, var(--card-accent) 55%, var(--line));
@@ -263,14 +267,17 @@ img, svg { display: block; }
   transition: border-color .35s;
   display: block;
   position: relative;
+  z-index: 1;
+  /* The opaque surface, clipped contents, and video move as a complete card. */
+  contain: paint;
   overflow: hidden;
 }
-.project-card::after { pointer-events: none; border-radius: inherit; box-shadow: 0 0 100px color-mix(in srgb, var(--card-accent), transparent 92%) inset; content: ""; transition: box-shadow .35s; position: absolute; inset: 0; }
-.project-card:hover, .project-card:focus-visible {
+.project-card::after { pointer-events: none; z-index: 3; border-radius: inherit; box-shadow: 0 0 100px color-mix(in srgb, var(--card-accent), transparent 92%) inset; content: ""; position: absolute; inset: 0; }
+.project-step[data-highlighted="true"] > .project-card {
   border-color: var(--card-accent);
 }
 .project-card:focus-visible { outline: 3px solid var(--card-accent); outline-offset: 3px; }
-.project-layout { min-height: inherit; grid-template-columns: minmax(0, 1.5fr) minmax(21rem, .9fr); display: grid; }
+.project-layout { min-height: inherit; grid-template-columns: minmax(0, 1.5fr) minmax(21rem, .9fr); display: grid; position: relative; z-index: 2; background: inherit; }
 .project-visual {
   background: radial-gradient(circle at 50% 45%, var(--card-accent), transparent 48%), var(--surface-visual);
   border-right: 1px solid #ffffff14;
@@ -283,10 +290,10 @@ img, svg { display: block; }
 .image-cover.image-contain { width: 100%; height: 100%; inset: 0; object-fit: contain; padding: 1rem; background: var(--surface-visual); }
 .modal-preview .image-contain { padding-top: 4.75rem; }
 .image-contain ~ .project-visual-shade, .image-contain ~ .modal-image-shade { background: none; }
-.project-card:hover .project-visual img, .project-card:focus-visible .project-visual img { filter: saturate(1.05); transform: scale(1.025); }
+.project-step[data-highlighted="true"] .project-visual > img { filter: saturate(1.05); transform: scale(1.025); }
 .project-video { display: block; pointer-events: none; opacity: 0; }
 .project-video[data-playing="true"] { opacity: 1; }
-.project-card:hover .project-visual video, .project-card:focus-visible .project-visual video { filter: saturate(1.05); transform: scale(1.025); }
+.project-step[data-highlighted="true"] .project-visual > video { filter: saturate(1.05); transform: scale(1.025); }
 @media (prefers-reduced-motion: reduce) {
   .project-video[data-playing="true"] { opacity: 0; }
 }
@@ -305,7 +312,7 @@ img, svg { display: block; }
 .project-platform-badge svg { width: clamp(1.25rem, 2vw, 1.65rem); height: clamp(1.25rem, 2vw, 1.65rem); flex: none; color: var(--foreground); }
 .project-card:is([data-project="tracelens"], [data-project="pathforge"]) .project-copy { container-type: inline-size; }
 .project-card:is([data-project="tracelens"], [data-project="pathforge"]) .project-title-with-icon { font-size: min(clamp(2.7rem, 4.6vw, 5rem), 18.5cqi); }
-.project-card:hover .project-title, .project-card:focus-visible .project-title { color: var(--card-accent); }
+.project-step[data-highlighted="true"] .project-title { color: var(--card-accent); }
 .project-description { max-width: 32rem; color: var(--text-soft); margin-top: 1.6rem; font-size: clamp(.9rem, 1.25vw, 1.03rem); line-height: 1.65; display: block; }
 .project-footer { justify-content: space-between; align-items: end; gap: 1.5rem; margin-top: 3rem; display: flex; }
 .tech-list, .modal-tags { flex-wrap: wrap; gap: .45rem; display: flex; }
@@ -313,24 +320,26 @@ img, svg { display: block; }
 .tech-dot { width: .4rem; height: .4rem; flex: none; border-radius: 50%; background: var(--card-accent); box-shadow: 0 0 7px color-mix(in srgb, var(--card-accent), transparent 35%); }
 .project-open { border: 1px solid var(--line); background: color-mix(in srgb, var(--card-accent), transparent 76%); border-radius: 999px; flex: none; place-items: center; width: 3.2rem; height: 3.2rem; transition: background .22s, color .22s, transform .22s; display: grid; }
 .project-open svg { width: 1rem; }
-.project-card:hover .project-open, .project-card:focus-visible .project-open { background: var(--card-accent); color: #08090d; transform: scale(1.06); }
+.project-step[data-highlighted="true"] .project-open { background: var(--card-accent); color: #08090d; transform: scale(1.06); }
 
 /* Cards with an external shortcut use sibling controls, never a link in a button. */
 .project-card-with-link > .project-layout { pointer-events: none; }
 .project-details-trigger { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; padding: 0; border: 0; border-radius: inherit; background: transparent; cursor: pointer; }
 .project-details-trigger:focus { outline: none; }
-.project-card-with-link:has(> .project-details-trigger:focus-visible) { border-color: var(--card-accent); outline: 3px solid var(--card-accent); outline-offset: 3px; }
-.project-card-with-link:has(> .project-details-trigger:focus-visible) .project-title { color: var(--card-accent); }
-.project-card-with-link:has(> .project-details-trigger:focus-visible) .project-open { background: var(--card-accent); color: #08090d; transform: scale(1.06); }
-.project-card-with-link:has(> .project-details-trigger:focus-visible) .project-visual :is(img, video) { filter: saturate(1.05); transform: scale(1.025); }
-.project-step:has(> .project-card-with-link > .project-details-trigger:focus-visible)::before { opacity: calc(var(--glow-ambient-opacity) * 1.12); }
-.project-step:has(> .project-card-with-link > .project-details-trigger:focus-visible)::after { opacity: calc(var(--glow-edge-opacity) * 1.12); }
+.project-card-with-link:has(> .project-details-trigger:focus-visible) { outline: 3px solid var(--card-accent); outline-offset: 3px; }
 .project-footer-group { display: flex; flex-direction: column; align-items: flex-start; gap: 1.25rem; margin-top: 2rem; }
 .project-footer-group > .project-footer { width: 100%; margin-top: 0; }
 .project-quick-link { position: relative; z-index: 3; display: inline-flex; align-items: center; gap: .75rem; min-height: 2.75rem; padding: .65rem 1rem; border: 1px solid color-mix(in srgb, var(--card-accent) 50%, var(--line)); border-radius: 999px; background: color-mix(in srgb, var(--card-accent) 12%, var(--surface-solid)); color: var(--foreground); font-size: .8125rem; font-weight: 500; line-height: 1.3; pointer-events: auto; transition: border-color .15s ease, background-color .15s ease; }
 .project-quick-link svg { width: .95rem; height: .95rem; flex: none; color: var(--card-accent); }
 .project-quick-link:hover { border-color: var(--card-accent); background: color-mix(in srgb, var(--card-accent) 20%, var(--surface-solid)); }
 .project-quick-link:focus-visible { outline: 2px solid var(--card-accent); outline-offset: 4px; }
+
+/* Interactive launch films keep their full frame and independent controls. */
+.project-visual-with-film { display: flex; align-items: center; padding: clamp(.75rem, 1.8vw, 1.5rem); background: var(--surface-visual); }
+.project-card[data-project="glee"] .project-visual video { transform: none !important; filter: none !important; }
+.project-card[data-project="glee"] .project-title-icon { width: 1.296em; height: 1.296em; }
+:root:not([data-theme="dark"]) .project-step[data-highlighted="true"] .project-card[data-project="glee"] .project-title,
+:root:not([data-theme="dark"]) .project-modal[data-project="glee"] .modal-kicker { color: color-mix(in srgb, var(--card-accent) 40%, var(--foreground)); }
 
 .project-dialog { width: min(94vw, 92rem); max-width: none; max-height: 92svh; color: var(--foreground); background: transparent; border: 0; outline: none; margin: auto; padding: 0; overflow: visible; }
 .project-dialog::backdrop { backdrop-filter: blur(18px); background: #030407d1; animation: backdrop-in .2s both; }
@@ -351,9 +360,9 @@ img, svg { display: block; }
 .project-modal:is([data-project="tracelens"], [data-project="pathforge"], [data-project="daypilot"]) :is(.modal-copy, .behind-build-header > div:first-child) { container-type: inline-size; }
 .project-modal:is([data-project="tracelens"], [data-project="pathforge"], [data-project="daypilot"]) .modal-copy h2 { font-size: min(clamp(3rem, 5vw, 5.5rem), var(--logo-title-fit)); }
 .modal-kicker { color: var(--card-accent); }
-:root:not([data-theme="dark"]) .project-card[data-project="jevon"]:is(:hover, :focus-visible) .project-title,
+:root:not([data-theme="dark"]) .project-step[data-highlighted="true"] .project-card[data-project="jevon"] .project-title,
 :root:not([data-theme="dark"]) .project-modal[data-project="jevon"] .modal-kicker { color: color-mix(in srgb, var(--card-accent) 65%, var(--foreground)); }
-:root:not([data-theme="dark"]) .project-card[data-project="vigil"]:is(:hover, :focus-visible) .project-title,
+:root:not([data-theme="dark"]) .project-step[data-highlighted="true"] .project-card[data-project="vigil"] .project-title,
 :root:not([data-theme="dark"]) .project-modal[data-project="vigil"] .modal-kicker { color: color-mix(in srgb, var(--card-accent) 65%, var(--foreground)); }
 .modal-description { color: var(--text-soft); margin: 1.7rem 0 0; font-size: 1rem; line-height: 1.72; }
 .modal-actions { flex-wrap: wrap; gap: .65rem; display: flex; }
@@ -500,8 +509,7 @@ img, svg { display: block; }
 .footer-clock { display: inline-block; width: 8ch; white-space: nowrap; text-align: right; font-variant-numeric: tabular-nums; }
 .footer-signoff { display: flex; align-items: center; justify-content: flex-end; gap: 1.5rem; }
 .footer-copyright { white-space: nowrap; }
-.footer-visitor-count { flex: none; min-width: 6ch; color: #0969da; font-family: "Geist Mono", monospace; font-size: .6875rem; line-height: 1.6; font-variant-numeric: tabular-nums; text-align: center; }
-[data-theme="dark"] .footer-visitor-count { color: #1e90ff; }
+.footer-visitor-count { flex: none; min-width: 3ch; color: #1e90ff; font-family: "Geist Mono", monospace; font-size: .6875rem; line-height: 1.6; font-variant-numeric: tabular-nums; text-align: center; }
 .footer-back-top { display: inline-flex; flex: none; align-items: center; gap: .4rem; min-height: 2rem; color: var(--text-soft); font-size: .75rem; line-height: 1.4; transition: color .15s ease; }
 .footer-back-top svg { width: .85rem; height: .85rem; transform: rotate(180deg); }
 .footer-back-top:hover { color: var(--foreground); }

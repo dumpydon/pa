@@ -14,13 +14,14 @@ export function ProjectVideo({ media, decorative = false }: { media: Project["me
 
     const source = media.videoSrc;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const step = video.closest<HTMLElement>(".project-step");
     let nearby = false;
     let disposed = false;
 
     function updatePlayback() {
       if (!video) return;
       const behindModal = document.body.classList.contains("modal-open") && !video.closest("dialog[open]");
-      if (!nearby || reducedMotion.matches || document.hidden || behindModal) {
+      if (!nearby || reducedMotion.matches || document.hidden || behindModal || step?.dataset.covered === "true") {
         video.pause();
         if (reducedMotion.matches) delete video.dataset.playing;
         return;
@@ -29,7 +30,11 @@ export function ProjectVideo({ media, decorative = false }: { media: Project["me
       // Defer the video request until its card approaches the viewport.
       if (!video.getAttribute("src")) video.src = source;
       video.muted = true;
-      void video.play().catch(() => {
+      void video.play().then(() => {
+        // A scroll can cover the card while an asynchronous play request settles.
+        if (disposed || step?.dataset.covered === "true" || document.hidden ||
+          (document.body.classList.contains("modal-open") && !video.closest("dialog[open]"))) video.pause();
+      }).catch(() => {
         // Autoplay can be blocked by a device's power/data policy; retain the poster.
         if (!disposed) delete video.dataset.playing;
       });
@@ -43,6 +48,7 @@ export function ProjectVideo({ media, decorative = false }: { media: Project["me
 
     const modalObserver = new MutationObserver(updatePlayback);
     modalObserver.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    if (step) modalObserver.observe(step, { attributes: true, attributeFilter: ["data-covered"] });
     reducedMotion.addEventListener("change", updatePlayback);
     document.addEventListener("visibilitychange", updatePlayback);
 

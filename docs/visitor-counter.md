@@ -30,15 +30,6 @@ Local checks never modify the production count. The database key and SQL
 trigger atomically deduplicate IDs; the registration and total read run in a
 single D1 transaction.
 
-Cloudflare version/branch preview hosts do not register visits. Production
-registration is restricted to `VISITOR_SITE_HOST`, currently the existing
-`piyush-agarwal-portfolio.dumpydon.workers.dev` hostname. If a custom domain is
-added later, update that value to the canonical public hostname.
-
-With localhost running, verify deduplication and request validation using
-`node scripts/test-visitors.mjs`. The test refuses non-local hosts and adds
-only two synthetic IDs to the local database, never to production.
-
 ## Production preparation (do this before publishing the feature)
 
 The Cloudflare login must have D1 write permission. The existing Worker remains

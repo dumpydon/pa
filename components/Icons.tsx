@@ -63,3 +63,18 @@ export function Branch({ className }: IconProps) {
 export function Warning({ className }: IconProps) {
   return <svg {...svgProps} className={className}><path d="M12 3 2.8 20h18.4L12 3Z" /><path d="M12 9v5m0 3h.01" /></svg>;
 }
+export function Play({ className }: IconProps) {
+  return <svg {...svgProps} className={className}><path d="m9 5.5 10 6.5-10 6.5Z" fill="currentColor" strokeWidth="1.2" /></svg>;
+}
+export function Pause({ className }: IconProps) {
+  return <svg {...svgProps} className={className}><rect x="6" y="5" width="4" height="14" rx="1" /><rect x="14" y="5" width="4" height="14" rx="1" /></svg>;
+}
+export function Replay({ className }: IconProps) {
+  return <svg {...svgProps} className={className}><path d="M5 8a8 8 0 1 1-1 7M5 3v5h5" /></svg>;
+}
+export function Volume({ className, muted = false }: IconProps & { muted?: boolean }) {
+  return <svg {...svgProps} className={className}><path d="m11 5-6 4H2v6h3l6 4Z" />{muted ? <path d="m16 9 6 6m0-6-6 6" /> : <path d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14" />}</svg>;
+}
+export function Fullscreen({ className }: IconProps) {
+  return <svg {...svgProps} className={className}><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5" /></svg>;
+}

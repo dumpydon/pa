@@ -7,7 +7,7 @@ export type BuildInsight = {
 
 export type Project = {
   number: string;
-  slug: "tracelens" | "pathforge" | "jevon" | "limitx" | "daypilot" | "leetvis" | "vigil";
+  slug: "tracelens" | "pathforge" | "jevon" | "limitx" | "daypilot" | "leetvis" | "vigil" | "glee";
   title: string;
   iconSrc?: string;
   platform?: "macOS";
@@ -27,6 +27,7 @@ export type Project = {
     fit?: "contain";
     width?: number;
     height?: number;
+    film?: { duration: string; note: string };
   };
   behindTheBuild: BuildInsight[];
 };
@@ -348,6 +349,61 @@ export const projects: Project[] = [
         icon: "arrow",
         title: "What you would improve next",
         body: "Notarize public releases, improve update delivery, and complete broader Intel and macOS 13 runtime verification while preserving the existing local-data and backup formats.",
+      },
+    ],
+  },
+  {
+    number: "08",
+    slug: "glee",
+    title: "Glee",
+    iconSrc: "/projects/glee/app-icon.png",
+    platform: "macOS",
+    category: "Native macOS keep-awake utility",
+    description:
+      "Keep your Mac awake for agents, builds, and long downloads. A free menu-bar app with timed or unlimited sessions, optional closed-lid mode, and battery safeguards. No account required.",
+    technologies: ["Swift", "SwiftUI", "AppKit", "IOKit", "XPC"],
+    repositoryUrl: "https://github.com/dumpydon/glee",
+    liveUrl: "https://glee.dumpydon.workers.dev/",
+    liveLabel: "Download website",
+    cardLink: { label: "Quick Download Website", href: "https://glee.dumpydon.workers.dev/" },
+    accent: "#B3ED63", // The published Glee download site's green accent.
+    media: {
+      src: "/projects/glee/launch-poster.jpg",
+      videoSrc: "/projects/glee/launch-film.mp4",
+      alt: "Glee launch film showing a MacBook, the native menu-bar session timer, optional closed-lid controls, and the Mac reopening after work continues",
+      position: "center",
+      fit: "contain",
+      width: 1920,
+      height: 1080,
+      film: {
+        duration: "19 seconds",
+        note: "Closed-lid mode requires setup and an active session.",
+      },
+    },
+    behindTheBuild: [
+      {
+        number: "01",
+        icon: "tool",
+        title: "Hardest technical problem",
+        body: "Keeping a closed-lid session bounded while restoring the previous sleep setting after expiry, connection loss, or an app crash. A durable recovery journal records the old value before any system change.",
+      },
+      {
+        number: "02",
+        icon: "branch",
+        title: "Important engineering decision",
+        body: "Build on WakeBee’s open-source baseline, with a native SwiftUI menu-bar surface and an authenticated XPC helper for closed-lid work. Normal keep-awake sessions use IOKit assertions without administrator setup.",
+      },
+      {
+        number: "03",
+        icon: "warning",
+        title: "Safety before convenience",
+        body: "Closed-lid mode requires per-Mac administrator-approved setup and an active session. Battery, temperature, contact-loss, and four-hour limits bound the helper; Glee does not monitor or restart agents.",
+      },
+      {
+        number: "04",
+        icon: "arrow",
+        title: "What you would improve next",
+        body: "Add Apple notarization and signed update delivery, then expand Intel and macOS hardware verification—especially long-running battery and thermal scenarios. The current release uses manual updates.",
       },
     ],
   },
