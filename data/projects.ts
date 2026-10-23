@@ -7,7 +7,7 @@ export type BuildInsight = {
 
 export type Project = {
   number: string;
-  slug: "tracelens" | "pathforge" | "jevon" | "limitx" | "daypilot" | "leetvis" | "vigil" | "glee";
+  slug: "tracelens" | "pathforge" | "jevon" | "limitx" | "daypilot" | "leetvis" | "vigil" | "glee" | "cue";
   title: string;
   iconSrc?: string;
   platform?: "macOS";
@@ -404,6 +404,61 @@ export const projects: Project[] = [
         icon: "arrow",
         title: "What you would improve next",
         body: "Add Apple notarization and signed update delivery, then expand Intel and macOS hardware verification—especially long-running battery and thermal scenarios. The current release uses manual updates.",
+      },
+    ],
+  },
+  {
+    number: "09",
+    slug: "cue",
+    title: "Cue",
+    iconSrc: "/projects/cue/app-icon.svg",
+    platform: "macOS",
+    category: "macOS conversation copilot",
+    description:
+      "A Mac copilot that brings live transcription, screen context, and your notes into streaming AI replies. Choose your own models, use local speech recognition, and revisit saved session notes.",
+    technologies: ["Electron", "JavaScript", "Node.js", "Web Audio", "whisper.cpp"],
+    repositoryUrl: "https://github.com/dumpydon/cue",
+    liveUrl: "https://cue.dumpydon.workers.dev/",
+    liveLabel: "Download website",
+    cardLink: { label: "Quick Download Website", href: "https://cue.dumpydon.workers.dev/" },
+    accent: "#4D96FF", // The published Cue download site's blue accent.
+    media: {
+      src: "/projects/cue/launch-poster.jpg",
+      videoSrc: "/projects/cue/launch-film.mp4",
+      alt: "Cue's complete launch film illustrating screen and conversation context, Smart assist, a movable answer window, model choices, and a formatted coding response",
+      position: "center",
+      fit: "contain",
+      width: 1920,
+      height: 1080,
+      film: {
+        duration: "38 seconds",
+        note: "Product illustration · Mac developer preview · Bring your own AI provider.",
+      },
+    },
+    behindTheBuild: [
+      {
+        number: "01",
+        icon: "tool",
+        title: "Hardest technical problem",
+        body: "Combining microphone and meeting audio with screen context while keeping speaker labels, partial speech, and the selected question aligned. Late transcript events must not revive an ended session or contaminate a new answer.",
+      },
+      {
+        number: "02",
+        icon: "branch",
+        title: "Important engineering decision",
+        body: "Separate chat from speech-provider selection. Local whisper.cpp never silently falls back to cloud speech, while bounded transcript evidence and a small answer thread keep follow-ups focused without treating generated drafts as spoken facts.",
+      },
+      {
+        number: "03",
+        icon: "warning",
+        title: "Important privacy boundary",
+        body: "Screen and audio inputs depend on explicit permissions; cloud requests go to the selected provider. Screen-share exclusion is best effort, and local transcription does not make cloud chat local. The public Mac download is a developer preview.",
+      },
+      {
+        number: "04",
+        icon: "arrow",
+        title: "What you would improve next",
+        body: "Move toward Developer ID signing, Apple notarization, and update delivery, then expand capture and permission checks across meeting apps, Mac architectures, and OS versions. Keep local-model failures and provider errors visible and recoverable.",
       },
     ],
   },

@@ -364,6 +364,8 @@ img, svg { display: block; }
 :root:not([data-theme="dark"]) .project-modal[data-project="jevon"] .modal-kicker { color: color-mix(in srgb, var(--card-accent) 65%, var(--foreground)); }
 :root:not([data-theme="dark"]) .project-step[data-highlighted="true"] .project-card[data-project="vigil"] .project-title,
 :root:not([data-theme="dark"]) .project-modal[data-project="vigil"] .modal-kicker { color: color-mix(in srgb, var(--card-accent) 65%, var(--foreground)); }
+:root:not([data-theme="dark"]) .project-step[data-highlighted="true"] .project-card[data-project="cue"] .project-title,
+:root:not([data-theme="dark"]) .project-modal[data-project="cue"] .modal-kicker { color: color-mix(in srgb, var(--card-accent) 65%, var(--foreground)); }
 .modal-description { color: var(--text-soft); margin: 1.7rem 0 0; font-size: 1rem; line-height: 1.72; }
 .modal-actions { flex-wrap: wrap; gap: .65rem; display: flex; }
 .modal-actions a { border: 1px solid var(--line); background: var(--glass); min-height: 2.85rem; color: var(--foreground); border-radius: 999px; outline: none; justify-content: center; align-items: center; gap: .55rem; padding: .75rem 1rem; font-size: .78rem; font-weight: 520; transition: border-color .18s, background .18s, transform .18s; display: inline-flex; }
