@@ -7,7 +7,7 @@ export type BuildInsight = {
 
 export type Project = {
   number: string;
-  slug: "tracelens" | "pathforge" | "jevon" | "limitx" | "daypilot" | "leetvis" | "vigil" | "glee" | "cue";
+  slug: "tracelens" | "pathforge" | "jevon" | "limitx" | "daypilot" | "leetvis" | "vigil" | "glee" | "cue" | "woisex100";
   title: string;
   iconSrc?: string;
   platform?: "macOS";
@@ -459,6 +459,55 @@ export const projects: Project[] = [
         icon: "arrow",
         title: "What you would improve next",
         body: "Move toward Developer ID signing, Apple notarization, and update delivery, then expand capture and permission checks across meeting apps, Mac architectures, and OS versions. Keep local-model failures and provider errors visible and recoverable.",
+      },
+    ],
+  },
+  {
+    number: "10",
+    slug: "woisex100",
+    title: "WoiseX100",
+    iconSrc: "/projects/woisex100/logo.png",
+    category: "Voice-first interview agent",
+    description:
+      "A voice-first interview agent grounded in an owner-approved profile. Speak or type, adjust thinking effort, and hear AI replies with hands-free turn-taking, selectable voices, and an audio-reactive orb.",
+    technologies: ["JavaScript", "OpenAI", "Web Speech", "Web Audio", "Workers", "Durable Objects"],
+    repositoryUrl: "https://github.com/dumpydon/WoiseX100",
+    liveUrl: "https://voice100x.dumpydon.workers.dev/",
+    liveLabel: "Try the live app",
+    cardLink: { label: "Try the live app", href: "https://voice100x.dumpydon.workers.dev/" },
+    accent: "#FF506E", // The deployed WoiseX100 site's --accent token.
+    media: {
+      src: "/projects/woisex100/interface.webp",
+      alt: "The live WoiseX100 interview interface with its coral headline, voice-mode and thinking-effort controls, sample questions, and selectable speech playback",
+      position: "center",
+      fit: "contain",
+      width: 1280,
+      height: 720,
+    },
+    behindTheBuild: [
+      {
+        number: "01",
+        icon: "tool",
+        title: "Hardest technical problem",
+        body: "Turning continuous browser dictation into one intentional question. Indexed transcript segments, a three-second speech-silence boundary, and stale-event guards preserve short pauses without submitting duplicate or incomplete turns.",
+      },
+      {
+        number: "02",
+        icon: "branch",
+        title: "Important engineering decision",
+        body: "Keep interview grounding on the Worker and speech playback behind a separate gateway. SQLite-backed Durable Objects deduplicate generated audio and reserve character budgets before requests, while Device Voice remains an explicit alternative.",
+      },
+      {
+        number: "03",
+        icon: "warning",
+        title: "Important privacy boundary",
+        body: "The visible transcript stays in tab memory, not a saved chat history. Live questions and recent context reach OpenAI; browser dictation may use its speech service. Speech caches and anonymous usage ledgers are separate server-side records, and public messages cannot edit the approved profile.",
+      },
+      {
+        number: "04",
+        icon: "arrow",
+        title: "What you would improve next",
+        body: "Broaden real-device dictation checks across browsers, accents, permission changes, and interrupted replies. Review the speech adapter's replacement before its configured cutoff, preserving explicit provider choice and grounding evaluations rather than silently changing paid models.",
       },
     ],
   },
